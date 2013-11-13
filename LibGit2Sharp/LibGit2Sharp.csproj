@@ -75,6 +75,7 @@
     <Compile Include="Core\Handles\BranchIteratorSafeHandle.cs" />
     <Compile Include="Core\PushTransferProgressCallbacks.cs" />
     <Compile Include="Core\PackbuilderCallbacks.cs" />
+    <Compile Include="HistoryDivergence.cs" />
     <Compile Include="PushOptions.cs" />
     <Compile Include="Core\GitBuf.cs" />
     <Compile Include="FilteringOptions.cs" />

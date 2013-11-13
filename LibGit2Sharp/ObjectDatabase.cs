@@ -235,5 +235,13 @@ namespace LibGit2Sharp
 
             return repo.Lookup<TagAnnotation>(tagId);
         }
+
+        public virtual HistoryDivergence CalculateHistoryDivergence(Commit since, Commit until)
+        {
+            Ensure.ArgumentNotNull(since, "since");
+            Ensure.ArgumentNotNull(until, "until");
+
+            return new HistoryDivergence(repo, since, until);
+        }
     }
 }

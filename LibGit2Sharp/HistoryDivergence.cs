@@ -32,6 +32,13 @@ namespace LibGit2Sharp
                 return commonAncestor.Value;
             }
         }
+    }
 
+    internal class NullHistoryDivergence : HistoryDivergence
+    {
+        public override Commit CommonAncestor
+        {
+            get { return null; }
+        }
     }
 }

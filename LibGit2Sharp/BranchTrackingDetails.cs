@@ -7,9 +7,7 @@ namespace LibGit2Sharp
     /// </summary>
     public class BranchTrackingDetails
     {
-        private readonly int? aheadBy = null;
-        private readonly int? behindBy = null;
-        private readonly Func<Commit> commonAncestorAcessor = () => null;
+        private readonly HistoryDivergence historyDivergence;
 
         /// <summary>
         /// Needed for mocking purposes.
@@ -21,13 +19,11 @@ namespace LibGit2Sharp
         {
             if (!branch.IsTracking || branch.Tip == null || branch.TrackedBranch.Tip == null)
             {
+                historyDivergence = new NullHistoryDivergence();
                 return;
             }
 
-            HistoryDivergence div = repo.ObjectDatabase.CalculateHistoryDivergence(branch.Tip, branch.TrackedBranch.Tip);
-            aheadBy = div.AheadBy;
-            behindBy = div.BehindBy;
-            commonAncestorAcessor = () => div.CommonAncestor;
+            historyDivergence = repo.ObjectDatabase.CalculateHistoryDivergence(branch.Tip, branch.TrackedBranch.Tip);
         }
 
         /// <summary>
@@ -39,7 +35,7 @@ namespace LibGit2Sharp
         /// </summary>
         public virtual int? AheadBy
         {
-            get { return aheadBy; }
+            get { return historyDivergence.AheadBy; }
         }
 
         /// <summary>
@@ -51,7 +47,7 @@ namespace LibGit2Sharp
         /// </summary>
         public virtual int? BehindBy
         {
-            get { return behindBy; }
+            get { return historyDivergence.BehindBy; }
         }
 
         /// <summary>
@@ -63,7 +59,7 @@ namespace LibGit2Sharp
         /// </summary>
         public virtual Commit CommonAncestor
         {
-            get { return commonAncestorAcessor(); }
+            get { return historyDivergence.CommonAncestor; }
         }
     }
 }

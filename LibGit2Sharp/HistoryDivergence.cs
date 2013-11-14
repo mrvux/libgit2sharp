@@ -15,18 +15,11 @@ namespace LibGit2Sharp
 
         internal HistoryDivergence(Repository repo, Commit since, Commit until)
         {
-            Since = since;
-            Until = until;
-            
             commonAncestor = new Lazy<Commit>(() => repo.Commits.FindCommonAncestor(since, until));
             Tuple<int?, int?> div = Proxy.git_graph_ahead_behind(repo.Handle, until, since);
             AheadBy = div.Item1;
             BehindBy = div.Item2;
         }
-
-        public virtual Commit Since { get; private set; }
-
-        public virtual Commit Until { get; private set; }
 
         public virtual int? AheadBy { get; private set; }
 
